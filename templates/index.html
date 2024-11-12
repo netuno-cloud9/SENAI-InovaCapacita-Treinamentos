@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Metadados Essenciais -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início - Sistema de Controle de Treinamentos</title>
+    <!-- Estilos CSS -->
+    <style>
+        /* Estilos Globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f0f8ff;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #003f7f;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+        .navbar h1 {
+            font-size: 26px;
+            font-weight: bold;
+        }
+        .navbar button {
+            color: #fff;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .navbar button:hover {
+            text-decoration: underline;
+        }
+
+        /* Container Geral */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 40px 20px;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Seção de Pesquisa */
+        .search {
+            flex: 2;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .search h2 {
+            margin-bottom: 15px;
+            font-size: 22px;
+            color: #333;
+            font-weight: bold;
+        }
+        .search form {
+            display: flex;
+            gap: 10px;
+        }
+        .search label {
+            display: none;
+        }
+        .search input {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .search button {
+            padding: 10px 15px;
+            background-color: #00509e;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search button:hover {
+            background-color: #003f7f;
+        }
+
+        /* Seção de Perfil */
+        .profile {
+            flex: 1;
+            min-width: 280px;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profile h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .profile p {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .profile button {
+            padding: 10px 15px;
+            background-color: #00509e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+        .profile button:hover {
+            background-color: #003f7f;
+        }
+
+        /* Menu Principal */
+        .menu {
+            flex: 2;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .menu h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .menu a {
+            display: block;
+            padding: 15px;
+            background-color: #00509e;
+            color: #fff;
+            text-decoration: none;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            font-size: 18px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .menu a:hover {
+            background-color: #003f7f;
+        }
+
+        /* Rodapé */
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            padding: 20px;
+            background-color: #f0f8ff;
+            margin-top: 40px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .search, .profile, .menu {
+                width: 100%;
+                max-width: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Sistema de Controle de Treinamentos</h1>
+        <form method="POST" action="{{ url_for('logout') }}" style="display:inline;">
+            <button type="submit">Sair</button>
+        </form>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <div class="container">
+        <!-- Formulário de Pesquisa -->
+        <div class="search">
+            <h2>Consultar Situação do Colaborador</h2>
+            <form method="POST" action="{{ url_for('consultar_situacao') }}">
+                <label for="consulta">Nome ou Matrícula</label>
+                <input type="text" id="consulta" name="consulta" placeholder="Nome ou Matrícula" required>
+                <button type="submit">Pesquisar</button>
+            </form>
+        </div>
+
+        <!-- Seção de Perfil -->
+         <!-- Seção de Perfil -->
+         <div class="profile">
+            <h2>Perfil do Usuário</h2>
+            <p><strong>Nome:</strong> {{ session.get('username', 'Usuário Desconhecido') }}</p>
+            <p><strong>Papel:</strong> {{ session.get('role', 'Desconhecido') | title }}</p>
+        </div>
+
+        <!-- Menu Principal -->
+        <div class="menu">
+            <h2>Menu</h2>
+            {% if session.role == 'gerente' %}
+                <a href="{{ url_for('visualizar_treinamentos') }}">Visualizar Treinamentos</a>
+                <a href="{{ url_for('visualizar_tecnicos') }}">Gerenciar Técnicos Locais</a>
+            {% elif session.role == 'tecnico' %}
+                <a href="{{ url_for('visualizar_treinamentos') }}">Visualizar Treinamentos</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="footer">
+        &copy; {{ current_year }} Desenvolvido por Blue Team.
+    </div>
+
+</body>
+</html>

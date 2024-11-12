@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos de Aula</title>
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/stgeneral.css">
+    <link rel="stylesheet" href="/css/plan.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="barnav">
+        <label class="logo">edu.</label>
+        <div class="douser">
+            <label class="nameuser">Eduardo</label>
+            <img class="user" src="/img/user.png">
+        </div>
+        <img class="icon" src="/img/icons/exit.svg">
+    </nav>
+    <!--INICIO DA TELA-->
+    <div class="license">
+        <label>Habilitação profissional</label>
+        <select id="professionalLicense">
+            <option >Selecione--</option>
+            <option value="ds">Técnico em Desenvolvimento de Sistemas</option>
+            <option value="adm">Técnico em Administração</option>
+            <option value="log">Técnico em Logística</option>
+        </select>
+    </div>
+
+    <div class="competence hidden" id="competence">
+        <label>Elementos de Competência</label>
+        <select id="competenceElements"></select>
+    </div>
+
+    <div class="capacity hidden" id="capacity">
+        <label id="capacityLabel"></label>
+        <select id="capacityOptions"></select>
+    </div>
+
+    <div class="knowledge hidden" id="knowledge">
+        <label>Objetos de Conhecimento</label>
+        <div id="knowledgeLists"></div>
+    </div>
+    <!--FIM DA TELA-->
+    <div class="separator"></div>
+    <script src="/js/matriz.js"></script>
+</body>
+<footer>
+    <label>Comunicação Docente</label>
+</footer>
+
+</html>

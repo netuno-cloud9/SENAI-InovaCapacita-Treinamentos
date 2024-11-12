@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Inserir Treinamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        label, input, textarea, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Inserir Novo Treinamento</h1>
+    <form method="POST" action="{{ url_for('inserir_treinamento') }}">
+        <label for="titulo">Título do Treinamento:</label>
+        <input type="text" name="titulo" id="titulo" placeholder="Insira o título aqui" required>
+        
+        <label for="descricao">Descrição:</label>
+        <textarea name="descricao" id="descricao" placeholder="Escreva uma breve descrição"></textarea>
+        
+        <label for="data">Data:</label>
+        <input type="date" name="data" id="data" required min="{{ current_date }}">
+        
+        <button type="submit">Salvar</button>
+    </form>
+</body>
+</html>

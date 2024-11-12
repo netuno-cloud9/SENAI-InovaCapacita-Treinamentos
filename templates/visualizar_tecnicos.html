@@ -1,0 +1,56 @@
+<!-- visualizar_tecnicos.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Técnicos</title>
+    <style>
+        /* Estilos básicos */
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333; }
+        .navbar { width: 100%; background-color: #00509e; padding: 15px; color: #fff; text-align: center; }
+        h1 { color: #00509e; margin-top: 20px; }
+        table { width: 90%; max-width: 1000px; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #00509e; color: #fff; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .actions a { color: #00509e; text-decoration: none; margin: 0 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>Sistema de Gerenciamento de Técnicos</h1>
+    </div>
+
+    <h1>Visualizar Técnicos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Setor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tecnico in tecnicos %}
+            <tr>
+                <td>{{ tecnico['nome'] }}</td>
+                <td>{{ tecnico['email'] }}</td>
+                <td>{{ tecnico['telefone'] }}</td>
+                <td>{{ tecnico['setor'] }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('alterar_tecnico', id=tecnico['id']) }}">Editar</a> |
+                    <a href="{{ url_for('excluir_tecnico', id=tecnico['id']) }}">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ url_for('inserir_tecnico') }}" class="add-new">Adicionar Novo Técnico</a>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+{
+    "capacidades": {
+      "basicas": [
+        "Conhecer fundamentos de manutenção de sistemas e banco de dados.",
+        "Compreender técnicas de programação e testes na construção de sistemas."
+        
+      ],
+      "tecnicas": [
+        "Aplicar lógica de programação na resolução dos problemas computacionais.",
+        "Utilizar técnicas de modelagem e linguagem na manipulação de banco de dados.",
+        "Criar aplicativos e sistemas utilizando metodologias de desenvolvimento e padrões de projeto.",
+        "Estruturar aplicativos e sistemas por meio de técnicas de modelagem.",
+        "Validar a qualidade de sistemas por meio de ferramentas e técnicas de teste.",
+        "Analisar infraestrutura na configuração de recursos e na instalação e manutenção de softwares e serviços."
+      ],
+      "gestao": [
+        "Reconhecer o seu papel como integrante de equipe nos diferentes processos de trabalho."
+      ]
+    },
+    "unidades_de_competencias": [
+      {
+        "unidade": "Programar sistemas computacionais, atendendo normas e padrão de qualidade, usabilidade, robustez, integridade e segurança.",
+        "elementos_de_competencias": [
+          "Codificar programas.",
+          "Realizar interação com banco de dados."
+        ]
+      },
+      {
+        "unidade": "Desenvolver sistemas computacionais, atendendo normas e padrão de qualidade, usabilidade, robustez, integridade e segurança.",
+        "elementos_de_competencias": [
+          "Codificar sistemas.",
+          "Testar sistemas.",
+          "Manter sistemas.",
+          "Implantar sistemas."
+        ]
+      }
+    ],
+    "objetos_de_conhecimento": [
+      "Aplicativos de escritório",
+      "Ciclo de vida do software",
+      "Depuração",
+      "Documentação de sistemas",
+      "Estrutura de dados",
+      "Expressões lógicas e aritméticas",
+      "Ferramentas de gerenciamento",
+      "Ferramentas de teste",
+      "Instalação e configuração de serviços",
+      "Linguagem de programação estruturada",
+      "Linguagem de programação orientada a objetos",
+      "Manipulação de banco de dados",
+      "Metodologia de desenvolvimento de sistemas",
+      "Modelo conceitual",
+      "Modelo lógico e físico",
+      "Padrões de projetos (Design Patterns)",
+      "Planejamento de testes",
+      "Pseudocódigo",
+      "Requisitos de sistemas",
+      "Técnicas de modelagem",
+      "Tipos de teste"
+    ],
+    "versao": "IN: 2019",
+    "habilitacao_profissional": "Técnico em Desenvolvimento de Sistemas",
+    "eixo_tecnologico": "Informação e Comunicação",
+    "nivel_de_educacao_profissional": "Técnica de Nível Médio"
+  }
+  

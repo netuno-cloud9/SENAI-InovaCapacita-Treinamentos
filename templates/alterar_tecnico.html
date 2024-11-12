@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Técnico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        h1 {
+            color: #00509e;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #00509e;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #003f7f;
+        }
+        .btn-voltar {
+            display: inline-block;
+            margin-top: 20px;
+            color: #00509e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-voltar:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Editar Técnico</h1>
+    <form method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" value="{{ tecnico.nome }}" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="{{ tecnico.email }}" required>
+        
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" name="telefone" value="{{ tecnico.telefone }}" required>
+        
+        <label for="setor">Setor:</label>
+        <input type="text" id="setor" name="setor" value="{{ tecnico.setor }}" required>
+        
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{{ url_for('inserir_tecnico') }}" class="btn-voltar">Voltar</a>
+</body>
+</html>

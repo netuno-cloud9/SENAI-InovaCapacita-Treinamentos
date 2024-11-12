@@ -1,0 +1,78 @@
+* {
+    font-family: "Poppins", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #F2E6E4;
+}
+
+.separator {
+    width: 100%;
+    height: 1px;
+    border-radius: 20px;
+    background-color: rgb(194, 192, 192);
+}
+
+.categoria {
+    display: grid;
+    width: 100%;
+    padding: 2%;
+    box-sizing: border-box; /* Garante que o padding não afete o tamanho total do item */
+}
+
+.categoria label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4%;
+    color: #424242;
+    margin-top: 4%;
+}
+
+.items-container {
+    display: flex;
+    overflow-x: auto; /* Adiciona rolagem horizontal */
+    overflow-y: hidden; /* Remove rolagem vertical */
+    width: 100%; /* Garante que a largura da div ocupe toda a tela */
+    gap: 2%; /* Espaço entre os itens */
+    scrollbar-width: none; /* Oculta a barra de rolagem no Firefox */
+}
+
+.items-container::-webkit-scrollbar {
+    display: none; /* Oculta a barra de rolagem no Chrome, Safari e Opera */
+}
+
+.item {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    flex: 0 0 42%; 
+    border-radius: 0.2em;
+    padding: 2%;
+    box-sizing: border-box; /* Garante que o padding não afete o tamanho total do item */
+}
+
+.item img {
+    display: block;
+    border-radius: 0.4em;
+}
+
+.link-descricao {
+    margin-left: 4%;
+}
+
+.link-descricao label {
+    margin-top: 4%;
+    color: rgb(148, 148, 148);
+    font-weight: 300;
+    font-size: 80%;
+    text-align: center;
+}
+
+.link-descricao a {
+    text-decoration: none;
+    color: black;
+    font-weight: 400;
+}

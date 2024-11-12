@@ -1,0 +1,102 @@
+.hidden {
+    display: none;
+}
+/* Estilos para a seção de licença profissional */
+.license {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 0.8em;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.license label {
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.license select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 0px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Estilos para as seções de competência, capacidade e conhecimento */
+.hidden {
+    display: none;
+}
+
+.competence, .capacity {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 0.8em;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.competence label, .capacity label{
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.competence select, .capacity select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 0px solid #ccc;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+.knowledge {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.knowledge label {
+    color: #4492be;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.knowledge ul {
+    padding: 0;
+}
+
+.knowledge ul li {
+    margin: 4%;
+}
+
+/* Estilos para o rodapé */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.number {
+    position: absolute;
+    left: -30px; /* Ajuste o espaçamento à esquerda conforme necessário */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: #333;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 50%;
+}

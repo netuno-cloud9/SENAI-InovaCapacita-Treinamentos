@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Treinamentos</title>
+    <style>
+        /* Estilos básicos e responsivos */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            background-color: #00509e;
+            padding: 15px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        /* Estilos do Conteúdo */
+        h1 {
+            color: #00509e;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 90%;
+            max-width: 1000px;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #00509e;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e2f0ff;
+        }
+
+        .actions a {
+            color: #00509e;
+            text-decoration: none;
+            margin: 0 5px;
+            font-weight: bold;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        /* Botão para adicionar novo treinamento */
+        .add-new {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #00509e;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .add-new:hover {
+            background-color: #003f7f;
+        }
+
+        /* Ajustes de Responsividade */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 14px;
+            }
+
+            .navbar h1 {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar h1 {
+                font-size: 18px;
+            }
+
+            .add-new {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Sistema de Controle de Treinamentos</h1>
+    </div>
+
+    <!-- Título e Tabela de Treinamentos -->
+    <h1>Treinamentos</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for treinamento in treinamentos %}
+            <tr>
+                <td>{{ treinamento[1] }}</td>
+                <td>{{ treinamento[2] }}</td>
+                <td>{{ treinamento[3] }}</td>
+                <td class="actions">
+                    <a href="{{ url_for('alterar_treinamento', id=treinamento[0]) }}">Editar</a> |
+                    <a href="{{ url_for('excluir_treinamento', id=treinamento[0]) }}">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Botão para adicionar novo treinamento -->
+    <a href="{{ url_for('inserir_treinamento') }}" class="add-new">Adicionar Novo Treinamento</a>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Alterar Treinamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 50%;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            color: #00509e;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-group button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #fff;
+        }
+        .button-group .save {
+            background-color: #00509e;
+        }
+        .button-group .cancel {
+            background-color: #777;
+        }
+        .button-group .save:hover {
+            background-color: #003f7f;
+        }
+        .button-group .cancel:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Alterar Treinamento</h1>
+        <form method="POST" action="{{ url_for('alterar_treinamento', id=treinamento[0]) }}">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" value="{{ treinamento[1] }}" required>
+
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" rows="4" required>{{ treinamento[2] }}</textarea>
+
+            <label for="data">Data:</label>
+            <input type="date" id="data" name="data" value="{{ treinamento[3] }}" required>
+
+            <div class="button-group">
+                <button type="submit" class="save">Salvar Alterações</button>
+                <a href="{{ url_for('visualizar_treinamentos') }}" class="cancel">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Agro Indústria Polpa de Fruta LTDA</title>
+    <style>
+        /* Estilos semelhantes aos da página de login */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f8f5;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 300px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            color: #4CAF50;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+        .loading {
+            display: none;
+            font-size: 14px;
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form action="{{ url_for('register') }}" method="post" onsubmit="showLoading()">
+        <h2>Registro - Agro Indústria Polpa de Fruta LTDA</h2>
+        <!-- Exibe mensagens de erro e sucesso -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="error">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <!-- Campo de nome de usuário -->
+        <input type="text" name="username" placeholder="Nome de usuário" required aria-label="Nome de usuário">
+        
+        <!-- Campo de email -->
+        <input type="email" name="email" placeholder="Email" required aria-label="Email">
+        
+        <!-- Campo de senha -->
+        <input type="password" name="password" placeholder="Senha" required aria-label="Senha">
+        
+        <!-- Campo de confirmação de senha -->
+        <input type="password" name="confirm_password" placeholder="Confirme a senha" required aria-label="Confirme a senha">
+        
+        <!-- Seleção de papel (role) -->
+        <select name="role" required aria-label="Papel">
+            <option value="">Selecione o papel</option>
+            <option value="gerente">Gerente</option>
+            <option value="tecnico">Técnico</option>
+        </select>
+        
+        <!-- Botão de envio -->
+        <input type="submit" value="Registrar">
+        
+        <!-- Feedback visual de carregamento -->
+        <p class="loading" id="loading">Registrando...</p>
+    </form>
+
+    <script>
+        // Função para mostrar a mensagem de carregamento ao enviar o formulário
+        function showLoading() {
+            document.getElementById("loading").style.display = "block";
+        }
+    </script>
+</body>
+</html>
