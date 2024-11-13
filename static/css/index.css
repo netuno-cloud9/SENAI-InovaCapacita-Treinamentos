@@ -7,7 +7,7 @@
 
 body {
     font-family: "Poppins", sans-serif;
-    background-color: #F2E6E4;
+    background-color: #F2E6E4; /* Cor de fundo mais clara */
 }
 
 .main {
@@ -25,13 +25,13 @@ body {
     border-radius: 0.2em;
     justify-content: space-between;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
+    background-color: #FFF8E1; /* "Pale Lemon Yellow" como cor de fundo */
 }
 
 .separator {
     height: 1px;
     border-radius: 20px;
-    background-color: #C2C0C0;
+    background-color: #B8B0A1; /* Cor de separador semelhante ao "Light Brown Drab" */
 }
 
 .options {
@@ -52,14 +52,14 @@ body {
     padding: 4%;
     width: 20%;
     height: 40%;
-    background-color: #ffffff;
+    background-color: #D3D9C1; /* "Buffy Citron" para os botões */
     border-radius: 0.4em;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Search Section */
 .search {
-    background-color: #fff;
+    background-color: #E6EBE0; /* "Light Glaucous Blue" como cor de fundo da seção de pesquisa */
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -72,14 +72,14 @@ body {
 .search input {
     padding: 8px;
     font-size: 14px;
-    border: 1px solid #ddd;
+    border: 1px solid #B8B0A1; /* Bordas com tom próximo do "Light Brown Drab" */
     border-radius: 4px;
     flex: 1;
     margin-right: 10px;
 }
 .search button {
     padding: 8px 12px;
-    background-color: #00509e;
+    background-color: #91A7B4; /* Tom próximo ao "Light Glaucous Blue" para os botões */
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -87,5 +87,6 @@ body {
     transition: background-color 0.3s;
 }
 .search button:hover {
-    background-color: #003f7f;
+    background-color: #70899B; /* Um tom mais escuro para o hover do botão */
 }
+

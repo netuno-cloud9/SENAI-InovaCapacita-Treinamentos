@@ -1,163 +1,147 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- Metadados Essenciais -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Início - Sistema de Controle de Treinamentos</title>
-    <!-- Estilos CSS -->
+    <title>Controle de Treinamentos</title>
     <style>
-        /* Estilos Globais */
+        /* Reset e estilos globais */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            background-color: #f0f8ff;
+            background-color: #f4f6f9;
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             color: #333;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
         }
 
         /* Navbar */
         .navbar {
             background-color: #003f7f;
             padding: 15px 30px;
+            color: #fff;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .navbar h3 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .navbar form {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            color: #fff;
         }
-        .navbar h1 {
-            font-size: 26px;
-            font-weight: bold;
+        .navbar input[type="text"] {
+            padding: 8px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            margin-right: 10px;
         }
         .navbar button {
             color: #fff;
             background: none;
-            border: none;
-            font-size: 16px;
+            border: 2px solid #fff;
+            font-size: 14px;
+            padding: 6px 12px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         .navbar button:hover {
-            text-decoration: underline;
+            background-color: #00509e;
+            border-color: #00509e;
         }
 
-        /* Container Geral */
-        .container {
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #004a8d; /* Nova cor de fundo */
+            color: #fff;
             display: flex;
-            flex-wrap: wrap;
-            padding: 40px 20px;
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Seção de Pesquisa */
-        .search {
-            flex: 2;
-            background-color: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        .search h2 {
-            margin-bottom: 15px;
-            font-size: 22px;
-            color: #333;
-            font-weight: bold;
-        }
-        .search form {
-            display: flex;
-            gap: 10px;
-        }
-        .search label {
-            display: none;
-        }
-        .search input {
-            flex: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .search button {
-            padding: 10px 15px;
-            background-color: #00509e;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .search button:hover {
-            background-color: #003f7f;
-        }
-
-        /* Seção de Perfil */
-        .profile {
-            flex: 1;
-            min-width: 280px;
-            background-color: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .profile h2 {
-            font-size: 22px;
-            color: #333;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .profile p {
-            font-size: 15px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        .profile button {
-            padding: 10px 15px;
-            background-color: #00509e;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 15px;
-            margin-top: 15px;
-            transition: background-color 0.3s;
-        }
-        .profile button:hover {
-            background-color: #003f7f;
-        }
-
-        /* Menu Principal */
-        .menu {
-            flex: 2;
-            background-color: #fff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .menu h2 {
-            font-size: 22px;
-            color: #333;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .menu a {
-            display: block;
-            padding: 15px;
-            background-color: #00509e;
-            color: #fff;
-            text-decoration: none;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            font-size: 18px;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            top: 60px;
+            bottom: 0;
+            left: 0;
+            box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            transition: background-color 0.3s;
         }
-        .menu a:hover {
-            background-color: #003f7f;
+        .sidebar h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+        }
+        .user-info {
+            background-color: #00509e;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .user-info p {
+            color: #e0e0e0;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #ECF0F1;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+            justify-content: start;
+            font-weight: bold;
+        }
+        .sidebar a:hover {
+            background-color: #003366;
+        }
+
+        /* Centralização do Conteúdo Principal */
+        .main-container {
+            margin-left: 270px;
+            padding: 100px 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Card Geral */
+        .card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
 
         /* Rodapé */
@@ -166,62 +150,71 @@
             font-size: 14px;
             color: #777;
             padding: 20px;
-            background-color: #f0f8ff;
-            margin-top: 40px;
+            background-color: #f4f6f9;
+            margin-top: auto;
         }
 
         /* Responsividade */
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-            .search, .profile, .menu {
+            .sidebar {
                 width: 100%;
-                max-width: 600px;
+                position: relative;
+                height: auto;
+            }
+            .main-container {
+                margin-left: 0;
+                padding: 20px;
             }
         }
     </style>
+    <!-- Inclui a biblioteca Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-    <!-- Navbar -->
+    <!-- Navbar com barra de pesquisa -->
     <div class="navbar">
-        <h1>Sistema de Controle de Treinamentos</h1>
-        <form method="POST" action="{{ url_for('logout') }}" style="display:inline;">
+        <h3>Controle de Treinamentos</h3>
+        <form method="POST" action="{{ url_for('consultar_situacao') }}">
+            <input type="text" name="consulta" placeholder="Consultar situação...">
+            <button type="submit">Pesquisar</button>
+        </form>
+        <form method="POST" action="{{ url_for('logout') }}">
             <button type="submit">Sair</button>
         </form>
     </div>
 
-    <!-- Conteúdo Principal -->
-    <div class="container">
-        <!-- Formulário de Pesquisa -->
-        <div class="search">
-            <h2>Consultar Situação do Colaborador</h2>
-            <form method="POST" action="{{ url_for('consultar_situacao') }}">
-                <label for="consulta">Nome ou Matrícula</label>
-                <input type="text" id="consulta" name="consulta" placeholder="Nome ou Matrícula" required>
-                <button type="submit">Pesquisar</button>
-            </form>
-        </div>
-
-        <!-- Seção de Perfil -->
-         <!-- Seção de Perfil -->
-         <div class="profile">
-            <h2>Perfil do Usuário</h2>
+    <!-- Sidebar com informações do usuário e menu -->
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        
+        <!-- Informações do Usuário -->
+        <div class="user-info">
             <p><strong>Nome:</strong> {{ session.get('username', 'Usuário Desconhecido') }}</p>
             <p><strong>Papel:</strong> {{ session.get('role', 'Desconhecido') | title }}</p>
+            <p><strong>Último acesso:</strong> {{ session.get('last_access', 'N/A') }}</p>
         </div>
 
-        <!-- Menu Principal -->
-        <div class="menu">
-            <h2>Menu</h2>
-            {% if session.role == 'gerente' %}
-                <a href="{{ url_for('visualizar_treinamentos') }}">Visualizar Treinamentos</a>
-                <a href="{{ url_for('visualizar_tecnicos') }}">Gerenciar Técnicos Locais</a>
-            {% elif session.role == 'tecnico' %}
-                <a href="{{ url_for('visualizar_treinamentos') }}">Visualizar Treinamentos</a>
-            {% endif %}
+        <!-- Menu -->
+        <a href="{{ url_for('visualizar_treinamentos') }}">Visualizar Treinamentos</a>
+        {% if session.role == 'gerente' %}
+            <a href="{{ url_for('visualizar_tecnicos') }}">Gerenciar Técnicos</a>
+        {% endif %}
+    </div>
+
+    <!-- Container Principal Centralizado -->
+    <div class="main-container">
+        
+        <!-- Card para o Gráfico de Barras -->
+        <div class="card">
+            <h3>Treinamentos Completos vs Incompletos</h3>
+            <canvas id="barChart"></canvas>
+        </div>
+
+        <!-- Card para o Gráfico de Linhas -->
+        <div class="card">
+            <h3>Treinamentos ao Longo do Tempo</h3>
+            <canvas id="lineChart"></canvas>
         </div>
     </div>
 
@@ -230,5 +223,56 @@
         &copy; {{ current_year }} Desenvolvido por Blue Team.
     </div>
 
+    <!-- Script JavaScript para configurar e renderizar os gráficos -->
+    <script>
+        // Gráfico de Barras - Treinamentos Completos vs Incompletos
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
+                datasets: [{
+                    label: 'Treinamentos Completos',
+                    data: [12, 19, 3, 5, 2],
+                    backgroundColor: '#4CAF50'
+                }, {
+                    label: 'Treinamentos Incompletos',
+                    data: [8, 11, 7, 6, 9],
+                    backgroundColor: '#FF5733'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Gráfico de Linhas - Evolução dos Treinamentos ao Longo do Tempo
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
+                datasets: [{
+                    label: 'Treinamentos Completos',
+                    data: [10, 15, 20, 25, 30],
+                    borderColor: '#00509e',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

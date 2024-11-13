@@ -266,24 +266,6 @@ def excluir_tecnico(id):
         return render_template('excluir_tecnico.html', id=id)
     return "Acesso negado", 403
 
-
-# # Rota para editar o perfil (disponível apenas para técnicos)
-# @app.route('/editar_perfil', methods=['GET', 'POST'])
-# def editar_perfil():
-#     if is_logged_in() and session.get('role') == 'tecnico':
-#         if request.method == 'POST':
-#             nome = request.form['nome']
-#             email = request.form['email']
-#             cursor = mysql.connection.cursor()
-#             cursor.execute("UPDATE tecnicos SET nome = %s, email = %s WHERE id = %s", (nome, email, session['user_id']))
-#             mysql.connection.commit()
-#             cursor.close()
-#             return redirect(url_for('index'))
-#         return render_template('editar_perfil.html')
-#     return redirect(url_for('login'))
-
-
-
 from flask_mysqldb import MySQLdb
 
 # Rota para consultar a situação do colaborador
