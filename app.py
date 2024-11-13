@@ -1,20 +1,29 @@
-from flask import Flask, render_template, request, redirect, url_for, session,  flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL, MySQLdb
-import hashlib, bcrypt
+import os
+from dotenv import load_dotenv
+import bcrypt
 
+# Carregar variáveis do arquivo .env
+load_dotenv()
+
+# Inicializar o aplicativo Flask
 app = Flask(__name__)
 
-# Configuração do banco de dados
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PORT'] = 3307
-app.config['MYSQL_PASSWORD'] = 'BASH$634pcpv!!'
-app.config['MYSQL_DB'] = 'edu_db'
+# Configuração do banco de dados usando variáveis de ambiente
+app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
+app.config['MYSQL_USER'] = os.getenv('MYSQL_USER')
+app.config['MYSQL_PORT'] = int(os.getenv('MYSQL_PORT', 3306))  # Padrão para 3306 se a variável não existir
+app.config['MYSQL_PASSWORD'] = os.getenv('MYSQL_PASSWORD')
+app.config['MYSQL_DB'] = os.getenv('MYSQL_DB')
+app.secret_key = os.getenv('SECRET_KEY')  # Adiciona a chave secreta da sessão
+
+# Verifique se todas as variáveis estão carregadas
+if not all([app.config['MYSQL_HOST'], app.config['MYSQL_USER'], app.config['MYSQL_PASSWORD'], app.config['MYSQL_DB'], app.secret_key]):
+    raise ValueError("Configuração do banco de dados ou SECRET_KEY não encontrada nas variáveis de ambiente.")
+
+# Inicializar a extensão MySQL com o app configurado
 mysql = MySQL(app)
-
-# Chave secreta para gerenciamento de sessão
-app.secret_key = 'your_secret_key_here'
-
 # Função auxiliar para verificar se o usuário está logado
 def is_logged_in():
     return 'logged_in' in session
