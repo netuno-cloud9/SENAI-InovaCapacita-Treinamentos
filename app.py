@@ -7,9 +7,9 @@ app = Flask(__name__)
 # Configuração do banco de dados
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PORT'] = 3307
-app.config['MYSQL_PASSWORD'] = 'BASH$634pcpv!!'
-app.config['MYSQL_DB'] = 'edu_db'
+app.config['MYSQL_PORT'] = 
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = ''
 mysql = MySQL(app)
 
 # Chave secreta para gerenciamento de sessão
