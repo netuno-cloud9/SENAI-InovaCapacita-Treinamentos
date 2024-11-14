@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL, MySQLdb
+import pandas as pd
 import os
 from flask_cors import CORS  # Importa CORS
 from dotenv import load_dotenv
 import bcrypt
+from werkzeug.utils import secure_filename
+
 
 # Carregar variáveis do arquivo .env
 load_dotenv()
@@ -11,6 +14,15 @@ load_dotenv()
 # Inicializar o aplicativo Flask
 app = Flask(__name__)
 CORS(app)  # Habilita CORS para todas as rotas
+
+# Define o diretório onde os uploads serão salvos temporariamente
+UPLOAD_FOLDER = './uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Cria a pasta de uploads, se não existir
+import os
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 # Configuração do banco de dados usando variáveis de ambiente
 app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
@@ -141,6 +153,43 @@ def reset_password():
 
     return render_template('reset_password.html')
 
+# Rota de upload de planilha
+@app.route('/upload_planilha', methods=['GET', 'POST'])
+def upload_planilha():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and file.filename.endswith('.xlsx'):
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            file.save(file_path)
+
+            try:
+                # Carrega a planilha com pandas
+                df = pd.read_excel(file_path)
+                data = df.to_dict(orient='records')
+
+                # Insere dados no banco de dados
+                cursor = mysql.connection.cursor()
+                for row in data:
+                    cursor.execute("""
+                        INSERT INTO tabela_dados (coluna1, coluna2, coluna3)
+                        VALUES (%s, %s, %s)
+                    """, (row['coluna1'], row['coluna2'], row['coluna3']))
+                mysql.connection.commit()
+                cursor.close()
+
+                flash('Dados importados com sucesso!', 'success')
+            except Exception as e:
+                flash(f'Erro ao importar dados: {e}', 'error')
+            finally:
+                # Remove o arquivo após a importação
+                os.remove(file_path)
+
+            return redirect(url_for('index'))
+        else:
+            flash('Formato de arquivo inválido. Envie um arquivo Excel.', 'error')
+            return redirect(request.url)
+    return render_template('upload_planilha.html')
 
 # Rota para a página inicial
 @app.route('/')
@@ -198,8 +247,6 @@ def index():
         )
 
     return redirect(url_for('login'))
-
-
 
 # Rota de logout
 @app.route('/logout')

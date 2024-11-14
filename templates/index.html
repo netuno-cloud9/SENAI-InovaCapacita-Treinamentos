@@ -89,12 +89,15 @@
             bottom: 0;
             box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
         }
-        .sidebar h2 {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 15px;
-        }
+        /* Centralizar o título "Dashboard" na barra lateral */
+.sidebar h2 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    text-align: center; /* Centraliza o título */
+}
+
 
         /* Menu Links */
         .sidebar a {
@@ -169,15 +172,19 @@
         .card {
             background-color: #FFFFFF;
             padding: 20px;
-            border-radius: 6px;
+            border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 600px;
             text-align: center;
             margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
         }
         .card h3 {
-            font-size: 18px;
+            font-size: 20px;
             color: #333;
             margin-bottom: 15px;
         }
@@ -202,7 +209,7 @@
         /* Statistics Cards */
         .stats-container {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             margin-bottom: 20px;
             justify-content: center;
             padding: 20px 0;
@@ -212,7 +219,7 @@
             color: #333;
             padding: 15px;
             border-radius: 8px;
-            width: 130px;
+            width: 150px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -237,11 +244,42 @@
             font-size: 18px;
             font-weight: bold;
         }
-        /* Cores específicas para ícones */
         .stats-card.total svg { fill: #4CAF50; }
         .stats-card.concluidos svg { fill: #009688; }
         .stats-card.incompletos svg { fill: #FF5733; }
         .stats-card.percentual svg { fill: #FFC107; }
+
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-form input[type="file"] {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f4f6f9;
+            font-size: 14px;
+            width: 80%; /* Ajuste a largura conforme necessário */
+        }
+
+        .upload-form button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .upload-form button:hover {
+            background-color: #45a049;
+        }
+
 
         /* Responsividade */
         @media (max-width: 768px) {
@@ -262,41 +300,50 @@
 <body>
 
     <!-- Navbar com barra de pesquisa -->
-    <div class="navbar">
-        <h3>Controle de Treinamentos</h3>
-        <form method="POST" action="{{ url_for('consultar_situacao') }}">
-            <input type="text" name="consulta" placeholder="Consultar situação...">
-            <button type="submit">Pesquisar</button>
-        </form>
-        <form method="POST" action="{{ url_for('logout') }}">
-            <button type="submit">Sair</button>
-        </form>
-    </div>
+<div class="navbar">
+    <h3>Controle de Treinamentos</h3>
+    <form method="POST" action="{{ url_for('consultar_situacao') }}">
+        <input type="text" name="consulta" placeholder="Consultar situação...">
+        <button type="submit">Pesquisar</button>
+    </form>
+    <form method="POST" action="{{ url_for('logout') }}">
+        <button type="submit">Sair</button>
+    </form>
+</div>
+
 
     <!-- Sidebar com informações do usuário e menu -->
-    <div class="sidebar">
-        <h2>Dashboard</h2>
-        
-        <!-- Informações do Usuário -->
-        <div class="user-info">
-            <p><strong>Nome:</strong> {{ session.get('username', 'Usuário Desconhecido') }}</p>
-            <p><strong>Papel:</strong> {{ session.get('role', 'Desconhecido') | title }}</p>
-            <p><strong>Último acesso:</strong> {{ session.get('last_access', 'N/A') }}</p>
-        </div>
+<div class="sidebar">
+    <h2>Dashboard</h2>
 
-        <!-- Menu com ícones SVG aprimorados -->
-        <a href="{{ url_for('visualizar_treinamentos') }}" class="active">
-            <!-- Ícone de treinos -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 8h14v2H5zm0 4h14v2H5zm0 4h14v2H5z"></path></svg>
-            Visualizar Treinamentos
-        </a>
-
-        <a href="{{ url_for('visualizar_tecnicos') }}">
-            <!-- Ícone de gerenciamento de técnicos -->
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
-            Gerenciar Técnicos
-        </a>
+    <!-- Informações do Usuário -->
+    <div class="user-info">
+        <p><strong>Nome:</strong> {{ session.get('username', 'Usuário Desconhecido') }}</p>
+        <p><strong>Papel:</strong> {{ session.get('role', 'Desconhecido') | title }}</p>
+        <p><strong>Último acesso:</strong> {{ session.get('last_access', 'N/A') }}</p>
     </div>
+    
+    <!-- Menu com ícones SVG aprimorados -->
+    <a href="{{ url_for('visualizar_treinamentos') }}">
+        <!-- Ícone de treinos -->
+        <svg xmlns="https://www.svgrepo.com/show/270598/switch.svg" viewBox="0 0 24 24"><path d="M5 8h14v2H5zm0 4h14v2H5zm0 4h14v2H5z"></path></svg>
+        Visualizar Treinamentos
+    </a>
+
+    <a href="{{ url_for('visualizar_tecnicos') }}">
+        <!-- Ícone de gerenciamento de técnicos -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+        Gerenciar Técnicos
+    </a>
+
+    <!-- Novo link para "Importar Dados" -->
+    <a href="{{ url_for('upload_planilha') }}">
+        <!-- Ícone de upload -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-16l-5 5h3v4h4v-4h3l-5-5z"></path></svg>
+        Importar Dados
+    </a>
+</div>
+
 
     <!-- Container Principal Centralizado -->
     <div class="main-container">
