@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL, MySQLdb
 import os
+from flask_cors import CORS  # Importa CORS
 from dotenv import load_dotenv
 import bcrypt
 
@@ -9,6 +10,7 @@ load_dotenv()
 
 # Inicializar o aplicativo Flask
 app = Flask(__name__)
+CORS(app)  # Habilita CORS para todas as rotas
 
 # Configuração do banco de dados usando variáveis de ambiente
 app.config['MYSQL_HOST'] = os.getenv('MYSQL_HOST')
@@ -144,9 +146,60 @@ def reset_password():
 @app.route('/')
 def index():
     if is_logged_in():
-        # Exibe o dashboard principal com as opções para acessar outras funcionalidades
-        return render_template('index.html', username=session.get('username'), role=session.get('role'))
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        
+        # Consulta para contar treinamentos completos, incompletos e total
+        cursor.execute("""
+            SELECT 
+                COUNT(*) AS total_treinamentos,
+                SUM(CASE WHEN st.situacao = 'em_dias' THEN 1 ELSE 0 END) AS total_concluidos,
+                SUM(CASE WHEN st.situacao = 'vencido' THEN 1 ELSE 0 END) AS total_incompletos
+            FROM situacao_treinamento st
+        """)
+        
+        estatisticas = cursor.fetchone()
+        
+        # Consulta para obter dados de treinamento por mês (usado nos gráficos)
+        cursor.execute("""
+            SELECT 
+                MONTH(t.data) AS mes, 
+                SUM(CASE WHEN st.situacao = 'em_dias' THEN 1 ELSE 0 END) AS completos,
+                SUM(CASE WHEN st.situacao = 'vencido' THEN 1 ELSE 0 END) AS incompletos
+            FROM situacao_treinamento st
+            JOIN treinamentos t ON st.treinamento_id = t.id
+            GROUP BY MONTH(t.data)
+            ORDER BY MONTH(t.data)
+        """)
+        
+        dados_situacao = cursor.fetchall()
+
+        situacao_labels = []
+        completos_data = []
+        incompletos_data = []
+
+        for row in dados_situacao:
+            situacao_labels.append(f'Mês {row["mes"]}')
+            completos_data.append(row['completos'] or 0)
+            incompletos_data.append(row['incompletos'] or 0)
+
+        cursor.close()
+        
+        return render_template(
+            'index.html',
+            username=session.get('username'),
+            role=session.get('role'),
+            situacao_labels=situacao_labels,
+            completos_data=completos_data,
+            incompletos_data=incompletos_data,
+            total_treinamentos=estatisticas['total_treinamentos'],
+            total_concluidos=estatisticas['total_concluidos'],
+            total_incompletos=estatisticas['total_incompletos'],
+            current_year=2024
+        )
+
     return redirect(url_for('login'))
+
+
 
 # Rota de logout
 @app.route('/logout')

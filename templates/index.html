@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Treinamentos</title>
+     <!-- Manifesto do PWA -->
+     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+     <meta name="theme-color" content="#000000">
+     
+     <!-- Ícone para o aplicativo -->
+     <link rel="icon" href="{{ url_for('static', filename='icons/icon-192x192.png') }}">
+ 
+     <!-- Incluindo o arquivo CSS externo -->
+     <link rel="stylesheet" href="C:\Users\instrutor\Documents\backup\edubeta\static\css\index.css">
+     
     <style>
         /* Reset e estilos globais */
         * {
@@ -12,9 +22,9 @@
             box-sizing: border-box;
         }
         body {
-            background-color: #f4f6f9;
+            background-color: #F4F6F9; /* Fundo claro */
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
+            color: #333; /* Texto escuro */
             display: flex;
             min-height: 100vh;
             flex-direction: column;
@@ -22,9 +32,9 @@
 
         /* Navbar */
         .navbar {
-            background-color: #003f7f;
-            padding: 15px 30px;
-            color: #fff;
+            background: linear-gradient(45deg, #FFFFFF, #E0E7FF);
+            padding: 10px 20px;
+            color: #333;
             width: 100%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: flex;
@@ -32,105 +42,134 @@
             align-items: center;
             position: fixed;
             top: 0;
-            left: 0;
             z-index: 1;
         }
         .navbar h3 {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
+            color: #333;
         }
         .navbar form {
             display: flex;
             align-items: center;
         }
         .navbar input[type="text"] {
-            padding: 8px;
-            font-size: 14px;
-            border: none;
+            padding: 6px;
+            font-size: 12px;
+            border: 1px solid #CCC;
             border-radius: 4px;
-            margin-right: 10px;
+            margin-right: 8px;
+            background-color: #FFF;
+            color: #333;
         }
         .navbar button {
-            color: #fff;
-            background: none;
-            border: 2px solid #fff;
-            font-size: 14px;
-            padding: 6px 12px;
+            color: #333;
+            background: #E0E7FF;
+            border: none;
+            font-size: 12px;
+            padding: 6px 10px;
             cursor: pointer;
             transition: background-color 0.3s;
+            border-radius: 3px;
         }
         .navbar button:hover {
-            background-color: #00509e;
-            border-color: #00509e;
+            background-color: #CBD5E1;
         }
 
         /* Sidebar */
         .sidebar {
-            width: 250px;
-            background-color: #004a8d; /* Nova cor de fundo */
-            color: #fff;
+            width: 220px;
+            background: #F1F5F9;
+            color: #333;
             display: flex;
             flex-direction: column;
-            padding: 20px;
+            padding: 15px;
             position: fixed;
-            top: 60px;
+            top: 50px;
             bottom: 0;
-            left: 0;
             box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
         }
         .sidebar h2 {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            color: #fff;
-            margin-bottom: 20px;
-            text-transform: capitalize;
-            letter-spacing: 0.5px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Menu Links */
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #333;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        /* Estilo de Hover e Seleção */
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #E2E8F0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #2B6CB0;
+        }
+
+        /* Icones SVG */
+        .sidebar a svg {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            fill: #4A5568; /* Cor do ícone */
         }
         .user-info {
-            background-color: #00509e;
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
+            background-color: #FFFFFF;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 15px;
             text-align: left;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .user-info p {
-            color: #e0e0e0;
-            font-size: 14px;
+            color: #333;
+            font-size: 12px;
             margin-bottom: 5px;
         }
         .sidebar a {
             display: flex;
             align-items: center;
-            color: #ECF0F1;
+            color: #333;
             text-decoration: none;
-            padding: 12px;
-            border-radius: 4px;
+            padding: 10px;
+            border-radius: 6px;
             margin-bottom: 10px;
             transition: background-color 0.3s;
-            justify-content: start;
             font-weight: bold;
+            font-size: 16px;
         }
         .sidebar a:hover {
-            background-color: #003366;
+            background-color: #CBD5E1;
         }
 
-        /* Centralização do Conteúdo Principal */
+        /* Main Content */
         .main-container {
-            margin-left: 270px;
-            padding: 100px 20px 20px;
+            margin-left: 240px;
+            padding: 80px 20px;
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             align-items: center;
         }
 
-        /* Card Geral */
+        /* Card */
         .card {
-            background-color: #ffffff;
+            background-color: #FFFFFF;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 600px;
@@ -138,21 +177,71 @@
             margin-bottom: 20px;
         }
         .card h3 {
-            font-size: 20px;
+            font-size: 18px;
             color: #333;
-            font-weight: bold;
             margin-bottom: 15px;
         }
 
-        /* Rodapé */
+        .statistics-section {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
         .footer {
             text-align: center;
-            font-size: 14px;
-            color: #777;
-            padding: 20px;
-            background-color: #f4f6f9;
+            font-size: 12px;
+            color: #555;
+            padding: 15px;
+            background-color: #F4F6F9;
             margin-top: auto;
         }
+
+        /* Statistics Cards */
+        .stats-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        .stats-card {
+            background-color: #FFFFFF;
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            width: 130px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.3s;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        .stats-card svg {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 5px;
+        }
+        .stats-card h4 {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+        .stats-card p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        /* Cores específicas para ícones */
+        .stats-card.total svg { fill: #4CAF50; }
+        .stats-card.concluidos svg { fill: #009688; }
+        .stats-card.incompletos svg { fill: #FF5733; }
+        .stats-card.percentual svg { fill: #FFC107; }
 
         /* Responsividade */
         @media (max-width: 768px) {
@@ -195,19 +284,65 @@
             <p><strong>Último acesso:</strong> {{ session.get('last_access', 'N/A') }}</p>
         </div>
 
-        <!-- Menu -->
-        <a href="{{ url_for('visualizar_treinamentos') }}">Visualizar Treinamentos</a>
-        {% if session.role == 'gerente' %}
-            <a href="{{ url_for('visualizar_tecnicos') }}">Gerenciar Técnicos</a>
-        {% endif %}
+        <!-- Menu com ícones SVG aprimorados -->
+        <a href="{{ url_for('visualizar_treinamentos') }}" class="active">
+            <!-- Ícone de treinos -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5 8h14v2H5zm0 4h14v2H5zm0 4h14v2H5z"></path></svg>
+            Visualizar Treinamentos
+        </a>
+
+        <a href="{{ url_for('visualizar_tecnicos') }}">
+            <!-- Ícone de gerenciamento de técnicos -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path></svg>
+            Gerenciar Técnicos
+        </a>
     </div>
 
     <!-- Container Principal Centralizado -->
     <div class="main-container">
         
+        <div class="stats-container">
+            <div class="stats-card total">
+                <!-- Ícone de Total -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M3 4h18v2H3zm0 7h18v2H3zm0 7h18v2H3z"></path>
+                </svg>
+                <h4>Total de Treinamentos</h4>
+                <p>{{ total_treinamentos }}</p>
+            </div>
+        
+            <div class="stats-card concluidos">
+                <!-- Ícone de Concluídos -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M9 16.17l-3.88-3.88-1.41 1.41L9 19 21 7 19.59 5.59z"></path>
+                </svg>
+                <h4>Concluídos</h4>
+                <p>{{ total_concluidos }}</p>
+            </div>
+        
+            <div class="stats-card incompletos">
+                <!-- Ícone de Incompletos -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17h2v-2h-2v2zm0-4h2V7h-2v8z"></path>
+                </svg>
+                <h4>Incompletos</h4>
+                <p>{{ total_incompletos }}</p>
+            </div>
+        
+            <div class="stats-card percentual">
+                <!-- Ícone de Percentual -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2.53 14.53L7 8.53 8.47 7l9.47 9.47-1.47 1.47zM8 14c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm8 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"></path>
+                </svg>
+                <h4>% Conclusão</h4>
+                <p>{{ (total_concluidos / total_treinamentos * 100) | round(2) if total_treinamentos > 0 else 0 }}%</p>
+            </div>
+        </div>
+        
+
         <!-- Card para o Gráfico de Barras -->
         <div class="card">
-            <h3>Treinamentos Completos vs Incompletos</h3>
+            <h3>Resultados de Treinamentos</h3>
             <canvas id="barChart"></canvas>
         </div>
 
@@ -223,56 +358,81 @@
         &copy; {{ current_year }} Desenvolvido por Blue Team.
     </div>
 
-    <!-- Script JavaScript para configurar e renderizar os gráficos -->
+    <!-- Script para registro do Service Worker -->
     <script>
-        // Gráfico de Barras - Treinamentos Completos vs Incompletos
-        const barCtx = document.getElementById('barChart').getContext('2d');
-        new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
-                datasets: [{
-                    label: 'Treinamentos Completos',
-                    data: [12, 19, 3, 5, 2],
-                    backgroundColor: '#4CAF50'
-                }, {
-                    label: 'Treinamentos Incompletos',
-                    data: [8, 11, 7, 6, 9],
-                    backgroundColor: '#FF5733'
-                }]
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+                    .then(registration => console.log('Service Worker registrado com sucesso:', registration))
+                    .catch(err => console.error('Falha ao registrar o Service Worker:', err));
+            });
+        }
+    </script>
+    <!-- Script JavaScript para configurar e renderizar os gráficos -->
+<script>
+    // Gráfico de Barras - Situação dos Treinamentos
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ situacao_labels | tojson | safe }},
+            datasets: [
+                {
+                    label: 'Concluídos',
+                    data: {{ completos_data | tojson | safe }},
+                    backgroundColor: '#4CAF50'  // Verde para "em dias"
+                },
+                {
+                    label: 'Incompletos',
+                    data: {{ incompletos_data | tojson | safe }},
+                    backgroundColor: '#FF5733'  // Vermelho para "vencido"
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
             },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
+            plugins: {
+                title: {
+                    display: true,
+                    text: `Completos: {{ completos_data | sum }} | Incompletos: {{ incompletos_data | sum }}`,
+                    font: {
+                        size: 16
                     }
                 }
             }
-        });
+        }
+    });
 
-        // Gráfico de Linhas - Evolução dos Treinamentos ao Longo do Tempo
-        const lineCtx = document.getElementById('lineChart').getContext('2d');
-        new Chart(lineCtx, {
-            type: 'line',
-            data: {
-                labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
-                datasets: [{
+    // Gráfico de Linhas - Evolução dos Treinamentos ao Longo do Tempo
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    new Chart(lineCtx, {
+        type: 'line',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio'],
+            datasets: [
+                {
                     label: 'Treinamentos Completos',
                     data: [10, 15, 20, 25, 30],
                     borderColor: '#00509e',
                     fill: false
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
-    </script>
+        }
+    });
+</script>
+
 </body>
 </html>
