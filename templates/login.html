@@ -6,9 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Agro Indústria Polpa de Fruta LTDA</title>
     <!-- Estilos externos e fontes do Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <!-- Estilos CSS -->
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -31,6 +34,7 @@
         .container h2 {
             color: #2e7d32;
             margin-bottom: 30px;
+            font-weight: 500;
         }
         .container input[type="text"],
         .container input[type="password"] {
@@ -39,7 +43,6 @@
             margin-bottom: 15px;
             border: 1px solid #cccccc;
             border-radius: 4px;
-            box-sizing: border-box;
             font-size: 16px;
             transition: border-color 0.3s;
         }
@@ -94,7 +97,7 @@
         <h2>Bem-vindo de Volta</h2>
         <!-- Mensagem de erro caso o login falhe -->
         {% if error %}
-            <p class="error">{{ error }}</p>
+            <p class="error" role="alert">{{ error }}</p>
         {% endif %}
 
         <!-- Formulário de Login -->
