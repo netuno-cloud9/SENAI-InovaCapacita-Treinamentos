@@ -230,6 +230,25 @@ def index():
             situacao_labels.append(f'Mês {row["mes"]}')
             completos_data.append(row['completos'] or 0)
             incompletos_data.append(row['incompletos'] or 0)
+        
+        # Consulta para calcular o percentual de conformidade por colaborador
+        cursor.execute("""
+            SELECT 
+                c.nome, 
+                COUNT(CASE WHEN st.situacao = 'em_dias' THEN 1 END) / COUNT(*) * 100 AS percentual_conformidade
+            FROM colaboradores c
+            JOIN situacao_treinamento st ON c.id = st.colaborador_id
+            GROUP BY c.nome
+        """)
+        
+        dados_conformidade = cursor.fetchall()
+
+        nomes_colaboradores = []
+        percentuais_conformidade = []
+
+        for row in dados_conformidade:
+            nomes_colaboradores.append(row['nome'])
+            percentuais_conformidade.append(row['percentual_conformidade'] or 0)
 
         cursor.close()
         
@@ -240,6 +259,8 @@ def index():
             situacao_labels=situacao_labels,
             completos_data=completos_data,
             incompletos_data=incompletos_data,
+            nomes_colaboradores=nomes_colaboradores,
+            percentuais_conformidade=percentuais_conformidade,
             total_treinamentos=estatisticas['total_treinamentos'],
             total_concluidos=estatisticas['total_concluidos'],
             total_incompletos=estatisticas['total_incompletos'],
@@ -247,6 +268,7 @@ def index():
         )
 
     return redirect(url_for('login'))
+
 
 # Rota de logout
 @app.route('/logout')
@@ -259,11 +281,12 @@ def logout():
 def visualizar_treinamentos():
     if is_logged_in():
         cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM treinamentos")
+        cursor.execute("SELECT id, titulo, descricao, data, status, participantes, responsavel, local FROM treinamentos")
         treinamentos = cursor.fetchall()
         cursor.close()
         return render_template('visualizar_treinamentos.html', treinamentos=treinamentos)
     return redirect(url_for('login'))
+
 
 # Rota para inserir um treinamento
 @app.route('/inserir_treinamento', methods=['GET', 'POST'])
@@ -273,13 +296,19 @@ def inserir_treinamento():
             titulo = request.form['titulo']
             descricao = request.form['descricao']
             data = request.form['data']
+            status = request.form['status']  # Novo campo
+            participantes = request.form['participantes']  # Novo campo
+            responsavel = request.form['responsavel']  # Novo campo
+            local = request.form['local']  # Novo campo
             cursor = mysql.connection.cursor()
-            cursor.execute("INSERT INTO treinamentos (titulo, descricao, data) VALUES (%s, %s, %s)", (titulo, descricao, data))
+            cursor.execute("INSERT INTO treinamentos (titulo, descricao, data, status, participantes, responsavel, local) VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+                           (titulo, descricao, data, status, participantes, responsavel, local))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('visualizar_treinamentos'))
         return render_template('inserir_treinamento.html')
     return "Acesso negado", 403
+
 
 # Rota para alterar um treinamento
 @app.route('/alterar_treinamento/<int:id>', methods=['GET', 'POST'])
@@ -290,7 +319,12 @@ def alterar_treinamento(id):
             titulo = request.form['titulo']
             descricao = request.form['descricao']
             data = request.form['data']
-            cursor.execute("UPDATE treinamentos SET titulo = %s, descricao = %s, data = %s WHERE id = %s", (titulo, descricao, data, id))
+            status = request.form['status']  # Novo campo
+            participantes = request.form['participantes']  # Novo campo
+            responsavel = request.form['responsavel']  # Novo campo
+            local = request.form['local']  # Novo campo
+            cursor.execute("UPDATE treinamentos SET titulo = %s, descricao = %s, data = %s, status = %s, participantes = %s, responsavel = %s, local = %s WHERE id = %s", 
+                           (titulo, descricao, data, status, participantes, responsavel, local, id))
             mysql.connection.commit()
             cursor.close()
             return redirect(url_for('visualizar_treinamentos'))
@@ -299,6 +333,7 @@ def alterar_treinamento(id):
         cursor.close()
         return render_template('alterar_treinamento.html', treinamento=treinamento)
     return "Acesso negado", 403
+
 
 # Rota para excluir um treinamento
 @app.route('/excluir_treinamento/<int:id>', methods=['GET', 'POST'])
