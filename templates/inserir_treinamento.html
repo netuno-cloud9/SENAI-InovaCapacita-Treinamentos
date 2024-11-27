@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inserir Treinamento</title>
+    <style>
+        /* Reset básico */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f3f4f6;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        label {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        textarea,
+        select,
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            background-color: #f9fafb;
+            color: #374151;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus,
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #2563eb;
+            background-color: #ffffff;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #2563eb;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        button:active {
+            background-color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Inserir Novo Treinamento</h1>
+        <form method="POST" action="{{ url_for('inserir_treinamento') }}">
+            <label for="titulo">Título do Treinamento:</label>
+            <input type="text" name="titulo" id="titulo" placeholder="Insira o título aqui" required>
+            
+            <label for="descricao">Descrição:</label>
+            <textarea name="descricao" id="descricao" placeholder="Escreva uma breve descrição"></textarea>
+            
+            <label for="data">Data de Início:</label>
+            <input type="date" name="data" id="data" required min="{{ current_date }}">
+            
+            <label for="status">Status:</label>
+            <select name="status" id="status" required>
+                <option value="em_andamento">Em andamento</option>
+                <option value="concluido">Concluído</option>
+            </select>
+            
+            <label for="participantes">Número de Participantes:</label>
+            <input type="number" name="participantes" id="participantes" value="0" required>
+
+            <label for="responsavel">Responsável:</label>
+            <input type="text" name="responsavel" id="responsavel" placeholder="Nome do responsável" required>
+
+            <label for="local">Local:</label>
+            <input type="text" name="local" id="local" placeholder="Local do treinamento" required>
+
+            <label for="data_final">Data Final:</label>
+            <input type="date" name="data_final" id="data_final">
+
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+</body>
+</html>

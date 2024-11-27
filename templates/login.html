@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <!-- Metadados essenciais -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Agro Indústria Polpa de Fruta LTDA</title>
+    <!-- Estilos externos e fontes do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Estilos CSS -->
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+        }
+        .container img {
+            max-width: 100px;
+            margin-bottom: 20px;
+        }
+        .container h2 {
+            color: #2e7d32;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .container input[type="text"],
+        .container input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .container input[type="text"]:focus,
+        .container input[type="password"]:focus {
+            border-color: #2e7d32;
+            outline: none;
+        }
+        .container input[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #2e7d32;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .container input[type="submit"]:hover {
+            background-color: #27632a;
+        }
+        .container .links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+        .container .links a {
+            color: #2e7d32;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .container .links a:hover {
+            color: #27632a;
+        }
+        .container .error {
+            color: red;
+            margin-bottom: 15px;
+        }
+        .container .loading {
+            display: none;
+            font-size: 14px;
+            color: #2e7d32;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Logo da empresa -->
+        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo da Empresa">
+
+        <h2>Bem-vindo de Volta</h2>
+        
+        <!-- Mensagem de erro caso o login falhe -->
+        {% if error %}
+            <p class="error" role="alert">{{ error }}</p>
+        {% endif %}
+
+        <!-- Formulário de Login -->
+        <form action="/login" method="post" onsubmit="showLoading()">
+            <!-- Campo de nome de usuário -->
+            <input type="text" name="username" placeholder="Nome de usuário ou email" required aria-label="Nome de usuário ou email">
+            <!-- Campo de senha -->
+            <input type="password" name="password" placeholder="Senha" required aria-label="Senha">
+            <!-- Botão de envio -->
+            <input type="submit" value="Entrar">
+            <!-- Feedback visual de carregamento -->
+            <p class="loading" id="loading">Carregando...</p>
+        </form>
+
+        <!-- Links adicionais -->
+        <div class="links">
+            <a href="/reset_password">Esqueceu a senha?</a>
+            <a href="/register">Criar conta</a>
+        </div>
+    </div>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Função para mostrar a mensagem de carregamento ao enviar o formulário
+        function showLoading() {
+            document.getElementById("loading").style.display = "block";
+        }
+    </script>
+</body>
+</html>

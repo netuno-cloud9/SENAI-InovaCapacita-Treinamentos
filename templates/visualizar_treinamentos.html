@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Treinamentos</title>
+    <style>
+        /* Estilo global */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            background-color: #0078d4;
+            padding: 10px 20px; /* Ajustado o padding para um melhor ajuste */
+            color: #fff;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .navbar .add-new {
+            margin-left: auto;
+            padding: 12px 25px;
+            background-color: #0078d4;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            box-shadow: 0px 4px 8px rgba(0, 120, 212, 0.3);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .navbar .add-new:hover {
+            background-color: #005bb5;
+            box-shadow: 0px 6px 12px rgba(0, 91, 181, 0.3);
+        }
+
+        /* Estilos da tabela */
+        table {
+            width: 100%;
+            max-width: 1980px;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0078d4;
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        td {
+            border-bottom: 1px solid #e9e9e9;
+            font-size: 14px;
+            color: #4a4a4a;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fbfc;
+        }
+
+        tr:hover {
+            background-color: #e3f2fd;
+            transition: background-color 0.3s;
+        }
+
+        /* Estilo das ações */
+        .actions a {
+            color: #0078d4;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .actions a:hover {
+            background-color: #0078d4;
+            color: #fff;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            table, th, td {
+                font-size: 14px;
+            }
+
+            .navbar h1 {
+                font-size: 20px;
+            }
+
+            .navbar .add-new {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar h1 {
+                font-size: 18px;
+            }
+
+            .navbar .add-new {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>Sistema de Controle de Treinamentos</h1>
+        <a href="{{ url_for('inserir_treinamento') }}" class="add-new">Adicionar Novo Treinamento</a>
+    </div>
+    
+
+    <!-- Tabela de Treinamentos -->
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descrição</th>         
+                <th>Data</th>
+                <th>Status</th>
+                <th>Participantes</th>
+                <th>Responsável</th>
+                <th>Local</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for treinamento in treinamentos %}
+            <tr>
+                <td>{{ treinamento[1] }}</td>
+                <td>{{ treinamento[2] }}</td>
+                <td>{{ treinamento[3] }}</td>
+                <td>{{ treinamento[4] }}</td>  <!-- Exibindo a data -->
+                <td>{{ treinamento[5] }}</td>  <!-- Exibindo o número de participantes -->
+                <td>{{ treinamento[6] }}</td>  <!-- Exibindo o responsável -->
+                <td>{{ treinamento[7] }}</td>  <!-- Exibindo o local -->
+                <td class="actions">
+                    <a href="{{ url_for('alterar_treinamento', id=treinamento[0]) }}">Editar</a> |
+                    <a href="{{ url_for('excluir_treinamento', id=treinamento[0]) }}">Excluir</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

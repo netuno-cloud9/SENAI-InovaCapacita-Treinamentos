@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Alterar Treinamento</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #00509e;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500;
+            color: #333;
+        }
+        input[type="text"], input[type="date"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+<<<<<<< HEAD
+        input:focus, textarea:focus, select:focus {
+=======
+        input:focus, textarea:focus {
+>>>>>>> 434c1b41a262b320d933cea5c9f9f685d543264b
+            border-color: #00509e;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 80, 158, 0.2);
+        }
+        textarea {
+            resize: vertical;
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        .button-group .save, .button-group .cancel {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #fff;
+            text-align: center;
+            transition: background-color 0.3s;
+            text-decoration: none;
+        }
+        .button-group .save {
+            background-color: #00509e;
+        }
+        .button-group .cancel {
+            background-color: #777;
+        }
+        .button-group .save:hover {
+            background-color: #003f7f;
+        }
+        .button-group .cancel:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Alterar Treinamento</h1>
+        <form method="POST" action="{{ url_for('alterar_treinamento', id=treinamento[0]) }}">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" value="{{ treinamento[1] }}" required>
+
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" rows="4" required>{{ treinamento[2] }}</textarea>
+
+            <label for="data">Data:</label>
+            <input type="date" id="data" name="data" value="{{ treinamento[3] }}" required>
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="em_andamento" {% if treinamento[4] == 'em_andamento' %}selected{% endif %}>Em andamento</option>
+                <option value="concluido" {% if treinamento[4] == 'concluido' %}selected{% endif %}>Concluído</option>
+                <option value="pendente" {% if treinamento[4] == 'pendente' %}selected{% endif %}>Pendente</option>
+            </select>
+
+            <label for="participantes">Participantes:</label>
+            <input type="number" id="participantes" name="participantes" value="{{ treinamento[5] }}" required>
+
+            <label for="responsavel">Responsável:</label>
+            <input type="text" id="responsavel" name="responsavel" value="{{ treinamento[6] }}" required>
+
+            <label for="local">Local:</label>
+            <input type="text" id="local" name="local" value="{{ treinamento[7] }}" required>
+
+            <div class="button-group">
+                <button type="submit" class="save">Salvar Alterações</button>
+                <a href="{{ url_for('visualizar_treinamentos') }}" class="cancel">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

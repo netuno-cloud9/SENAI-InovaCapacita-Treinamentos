@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste CouchDB</title>
+</head>
+<body>
+    <h1>Teste de Conexão ao CouchDB</h1>
+    <p>{{ message }}</p>
+    
+    {% if databases %}
+    <h2>Bancos de Dados Disponíveis:</h2>
+    <ul>
+        {% for db in databases %}
+        <li>{{ db }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

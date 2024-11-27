@@ -1,0 +1,262 @@
+{
+    "ds": {
+        "label": "Desenvolvimento de Sistemas",
+        "competenceElements": {
+            "uc0": {
+                "label": "selecione--"
+            },
+            
+            "uc11": {
+                "label": "Codificar programas",
+                "capacities": [
+                    {"text": "selecione--"},
+                    {
+                        "value": "basic",
+                        "text": "Básicas",
+                        "knowledge": [
+                            "11"
+                        ]
+                    },
+                    {
+                        "value": "tech",
+                        "text": "Técnicas",
+                        "knowledge": [
+                            "4",
+                            "5",
+                            "6",
+                            "19"
+                        ]
+                    }
+                ]
+            },
+            "uc12": {
+                "label": "Realizar interação com banco de dados.",
+                "capacities": [
+                    {"text": "selecione--"},
+                    {
+                        "value": "basic",
+                        "text": "Básica",
+                        "knowledge": [
+                            "15",
+                            "16"
+                        ]
+                    },
+                    {
+                        "value": "tech",
+                        "text": "Técnica",
+                        "knowledge": [
+                            "12",
+                            "15",
+                            "16"
+                        ]
+                    }
+                ]
+            },
+            "uc21": {
+                "label": "Codificar sistemas",
+                "capacities": [
+                    {"text": "selecione--"},
+                    {
+                        "value": "basic",
+                        "text": "Básicas",
+                        "knowledge": [
+                            "17"
+                        ]
+                    },
+                    {
+                        "value": "tech",
+                        "text": "Técnicas",
+                        "knowledge": [
+                            "2",
+                            "10",
+                            "11",
+                            "13",
+                            "18",
+                            "20",
+                            "21"
+                        ]
+                    },
+                    {
+                        "value": "management",
+                        "text": "Gestão",
+                        "knowledge": [
+                            "1",
+                            "7"
+                        ]
+                    }
+                ]
+            },
+            "uc22": {
+                "label": "Testar sistemas",
+                "capacities": [
+                    {"text": "selecione--"},
+                    {
+                        "value": "basic",
+                        "text": "Básicas",
+                        "knowledge": [
+                            "14"
+                        ]
+                    },
+                    {
+                        "value": "tech",
+                        "text": "Técnicas",
+                        "knowledge": [
+                            "3",
+                            "8"
+                        ]
+                    }
+                ]
+            },
+            "uc23": {
+                "label": "Manter sistemas",
+                "capacities": [
+                    {"text": "selecione--"},
+                    {
+                        "value": "basic",
+                        "text": "Básicas",
+                        "knowledge": [
+                            "4"
+                        ]
+                    },
+                    {
+                        "value": "tech",
+                        "text": "Técnicas",
+                        "knowledge": [
+                            "4"
+                        ]
+                    }
+                ]
+            },
+            "uc24": {
+                "label": "Implantar sistemas",
+                "capacities": [
+                    {"text": "selecione--"},
+                    {
+                        "value": "tech",
+                        "text": "Técnicas",
+                        "knowledge": [
+                            "9"
+                        ]
+                    }
+                ]
+            }
+        },
+        "objetos_de_conhecimento": {
+            "1": "Aplicativos de escritório",
+            "2": "Ciclo de vida do software",
+            "3": "Depuração",
+            "4": "Documentação de sistemas",
+            "5": "Estrutura de dados",
+            "6": "Expressões lógicas e aritméticas",
+            "7": "Ferramentas de gerenciamento",
+            "8": "Ferramentas de teste",
+            "9": "Instalação e configuração de serviços",
+            "10": "Linguagem de programação estruturada",
+            "11": "Linguagem de programação orientada a objetos",
+            "12": "Manipulação de banco de dados",
+            "13": "Metodologia de desenvolvimento de sistemas",
+            "14": "Tipos de teste",
+            "15": "Modelo conceitual",
+            "16": "Modelo lógico e físico",
+            "17": "Padrões de projetos (Design Patterns)",
+            "18": "Planejamento de testes",
+            "19": "Pseudocódigo",
+            "20": "Requisitos de sistemas",
+            "21": "Técnicas de modelagem"
+        }
+    },
+    "adm": {
+        "label": "Administração",
+        "competenceElements": {
+            "finance": {
+                "label": "Finanças",
+                "capacities": [
+                    {
+                        "value": "basic",
+                        "text": "Básica",
+                        "knowledge": [
+                            "26",
+                            "28"
+                        ]
+                    },
+                    {
+                        "value": "management",
+                        "text": "Gestão",
+                        "knowledge": [
+                            "31",
+                            "30"
+                        ]
+                    }
+                ]
+            },
+            "hr": {
+                "label": "Recursos Humanos",
+                "capacities": [
+                    {
+                        "value": "basic",
+                        "text": "Básica",
+                        "knowledge": [
+                            "27",
+                            "29"
+                        ]
+                    },
+                    {
+                        "value": "advanced",
+                        "text": "Avançada",
+                        "knowledge": [
+                            "32",
+                            "33"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "log": {
+        "label": "Logística",
+        "competenceElements": {
+            "supplyChain": {
+                "label": "Cadeia de Suprimentos",
+                "capacities": [
+                    {
+                        "value": "basic",
+                        "text": "Básica",
+                        "knowledge": [
+                            "34",
+                            "36"
+                        ]
+                    },
+                    {
+                        "value": "advanced",
+                        "text": "Avançada",
+                        "knowledge": [
+                            "39",
+                            "38"
+                        ]
+                    }
+                ]
+            },
+            "transportation": {
+                "label": "Transporte",
+                "capacities": [
+                    {
+                        "value": "basic",
+                        "text": "Básica",
+                        "knowledge": [
+                            "35",
+                            "37"
+                        ]
+                    },
+                    {
+                        "value": "management",
+                        "text": "Gestão",
+                        "knowledge": [
+                            "40",
+                            "41"
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}

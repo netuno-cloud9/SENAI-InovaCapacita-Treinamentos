@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Treinamentos</title>
+     <!-- Manifesto do PWA -->
+     <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+     <meta name="theme-color" content="#000000">
+     
+     <!-- Ícone para o aplicativo -->
+     <link rel="icon" href="{{ url_for('static', filename='icons/icon-192x192.png') }}">
+ 
+      <!-- Incluindo o arquivo CSS externo -->
+     <link rel="stylesheet" href="C:\Users\instrutor\Documents\backup\edubeta\static\css\index.css"> 
+     
+    <!-- Adicionamos Google Fonts e Font Awesome no head -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        /* Reset e estilos globais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f0f2f5;
+            font-family: "Roboto", sans-serif;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Navbar */
+        .navbar {
+            padding: 10px 20px;
+            color: #333;
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+        }
+        .navbar h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .navbar form {
+            display: flex;
+            align-items: center;
+        }
+        .navbar input[type="text"] {
+            padding: 6px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 8px;
+            background-color: #fff;
+            color: #333;
+            width: 448px; /* Aumenta o tamanho para 300px, ajuste conforme necessário */
+            max-width: 100%; /* Garante que a barra não ultrapasse a largura da tela */
+        }
+        .navbar button {
+            color: #fff;
+            background: #007bff;
+            border: none;
+            font-size: 14px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border-radius: 4px;
+        }
+        .navbar button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: #343a40;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            position: fixed;
+            top: 50px;
+            bottom: 0;
+            overflow-y: auto;
+        }
+        .sidebar h2 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #adb5bd;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 14px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .sidebar a:hover,
+        .sidebar a.active {
+            background-color: #495057;
+            color: #fff;
+        }
+        .sidebar a i {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        .user-info {
+            background-color: #495057;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .user-info p {
+            color: #adb5bd;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        /* Main Content */
+        .main-container {
+            margin-left: 240px;
+            padding: 80px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Statistics Cards */
+        .stats-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-around;
+            padding: 20px;
+            text-align: center;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .stats-item {
+            margin: 0;
+        font-size: 14px;
+        color: #191818;
+        font-weight: 600;
+        }
+
+        .stats-item img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .stats-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #191818;
+            font-weight: 600;
+        }
+
+        /* Valor destacado */
+        .stats-item .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #28a745;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        /* Efeito hover e animação de pulso */
+        .stats-item:hover .value {
+            transform: scale(1.1);
+            color: #218838;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Aplica o efeito de pulso ao passar o mouse */
+        .stats-item:hover .value {
+            animation: pulse 1s infinite;
+        }
+
+        /* Estilo para a navbar e sidebar */
+        .navbar, .sidebar {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Contêiner dos Gráficos */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .chart-card {
+            background-color: #f7f7f7;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            text-align: center;
+            margin: 10px;
+            max-width: 448px;
+        }
+
+        .chart-card canvas {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #555;
+            padding: 15px;
+            background-color: #f0f2f5;
+            margin-top: auto;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+            .main-container {
+                margin-left: 0;
+                padding: 80px 20px;
+            }
+            .chart-card {
+                width: 100%;
+            }
+        }
+    </style>
+    <!-- Inclui a biblioteca Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Navbar com barra de pesquisa -->
+<!-- Atualização na Navbar para incluir ícones Font Awesome -->
+<div class="navbar">
+    <h3>Controle de Treinamentos</h3>
+    <form method="POST" action="{{ url_for('consultar_situacao') }}">
+        <input type="text" name="consulta" placeholder="informe o colaborador.">
+        <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+    <form method="POST" action="{{ url_for('logout') }}">
+        <button type="submit">Sair</button>
+    </form>
+</div>
+
+<!-- Sidebar com informações do usuário e menu -->
+<div class="sidebar">
+    <h2>Painel de Navegação</h2>
+    <div class="user-info">
+        <p>Bem-vindo(a), {{ session.get('username', 'Usuário') }}</p>
+        <p><strong>Papel:</strong> {{ session.get('role', 'Desconhecido') }}</p>
+    </div>
+    
+    <nav>
+        <a href="{{ url_for('visualizar_treinamentos') }}"><i class="fas fa-book"></i> Treinamentos</a>
+        <a href="{{ url_for('visualizar_tecnicos') }}"><i class="fas fa-users-cog"></i> Técnicos</a>
+        <a href="{{ url_for('upload_planilha') }}"><i class="fas fa-file-upload"></i> Importar Dados</a>
+    </nav>
+    
+    <div class="settings">
+        <a href="{{ url_for('consultar_situacao') }}"><i class="fas fa-cog"></i> Configurações</a>
+        <a href="{{ url_for('consultar_situacao') }}"><i class="fas fa-question-circle"></i> Ajuda</a>
+    </div>
+</div>
+
+
+<div class="main-container">
+    <!-- Estatísticas na Parte Superior -->
+    <div class="stats-section">
+        <div class="stats-item">
+            <img src="https://www.svgrepo.com/show/211199/goal.svg" alt="Total de Treinamentos">
+            <p>Total de Treinamentos</p>
+            <p>{{ total_treinamentos }}</p>
+        </div>
+        <div class="stats-item">
+            <img src="https://www.svgrepo.com/show/485328/victory-medal.svg" alt="Concluídos">
+            <p>Concluídos</p>
+            <p>{{ total_concluidos }}</p>
+        </div>
+        <div class="stats-item">
+            <img src="https://www.svgrepo.com/show/405834/hourglass-not-done.svg" alt="Incompletos">
+            <p>Incompletos</p>
+            <p>{{ total_incompletos }}</p>
+        </div>
+        <div class="stats-item">
+            <img src="https://www.svgrepo.com/show/530143/certificate.svg" alt="% Conclusão">
+            <p>% Conclusão</p>
+            <p>{{ (total_concluidos / total_treinamentos * 100) | round(2) if total_treinamentos > 0 else 0 }}%</p>
+        </div>
+    </div>
+
+    <!-- Filtro de Situação -->
+    <div class="filter-section">
+        <label for="situacaoFilter">Filtrar Situação:</label>
+        <select id="situacaoFilter" onchange="atualizarGrafico()">
+            <option value="todos">Todos</option>
+            <option value="concluidos">Concluídos</option>
+            <option value="incompletos">Incompletos</option>
+        </select>
+    </div>
+
+    <!-- Gráficos na Parte Inferior -->
+    <div class="chart-container">
+        <div class="chart-card">
+            <h3>Resultados de Treinamentos</h3>
+            <canvas id="barChart"></canvas>
+        </div>
+        <div class="chart-card">
+            <h3>Percentual de Conformidade por Colaborador</h3>
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+</div>
+
+    <!-- Rodapé -->
+    <div class="footer">
+        &copy; {{ current_year }} Desenvolvido por Blue Team.
+    </div>
+
+    <!-- Script para registro do Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register("{{ url_for('static', filename='service-worker.js') }}")
+                    .then(registration => console.log('Service Worker registrado com sucesso:', registration))
+                    .catch(err => console.error('Falha ao registrar o Service Worker:', err));
+            });
+        }
+    </script>
+    <!-- Script JavaScript para configurar e renderizar os gráficos -->
+<script>
+   // Dados originais dos gráficos para preservar quando não há filtro
+const situacaoLabels = {{ situacao_labels | default([]) | tojson | safe }};
+const completosData = {{ completos_data | default([]) | tojson | safe }};
+const incompletosData = {{ incompletos_data | default([]) | tojson | safe }};
+const nomesColaboradores = {{ nomes_colaboradores | default([]) | tojson | safe }};
+const percentuaisConformidade = {{ percentuais_conformidade | default([]) | tojson | safe }};
+
+// Função para atualizar o gráfico com base no filtro selecionado
+function atualizarGrafico() {
+    const situacaoFilter = document.getElementById("situacaoFilter").value;
+    let datasets = [];
+
+    if (situacaoFilter === "concluidos") {
+        datasets.push({
+            label: 'Concluídos',
+            data: completosData,
+            backgroundColor: '#28a745'
+        });
+    } else if (situacaoFilter === "incompletos") {
+        datasets.push({
+            label: 'Incompletos',
+            data: incompletosData,
+            backgroundColor: '#dc3545'
+        });
+    } else {
+        // Exibe ambos os conjuntos de dados
+        datasets.push(
+            {
+                label: 'Concluídos',
+                data: completosData,
+                backgroundColor: '#28a745'
+            },
+            {
+                label: 'Incompletos',
+                data: incompletosData,
+                backgroundColor: '#dc3545'
+            }
+        );
+    }
+
+    // Atualiza o gráfico de barras - Situação dos Treinamentos
+    barChart.data.datasets = datasets;
+    barChart.update();
+}
+
+// Inicializa o gráfico de barras - Situação dos Treinamentos
+const barCtx = document.getElementById('barChart').getContext('2d');
+const barChart = new Chart(barCtx, {
+    type: 'bar',
+    data: {
+        labels: situacaoLabels,
+        datasets: [
+            {
+                label: 'Concluídos',
+                data: completosData,
+                backgroundColor: '#28a745'
+            },
+            {
+                label: 'Incompletos',
+                data: incompletosData,
+                backgroundColor: '#dc3545'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Gráfico de Barras - Percentual de Conformidade por Colaborador
+const lineCtx = document.getElementById('lineChart').getContext('2d');
+const lineChart = new Chart(lineCtx, {
+    type: 'bar',
+    data: {
+        labels: nomesColaboradores,
+        datasets: [
+            {
+                label: 'Percentual de Conformidade (%)',
+                data: percentuaisConformidade,
+                backgroundColor: '#ffcccb'
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.raw + '%';
+                    }
+                }
+            }
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

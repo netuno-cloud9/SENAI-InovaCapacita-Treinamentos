@@ -1,0 +1,122 @@
+<!-- visualizar_tecnicos.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Visualizar Técnicos</title>
+    <style>
+        /* Design aprimorado para experiência do usuário e estética */
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background-color: #e9ecef; 
+            color: #333; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            flex-direction: column; 
+            padding: 20px;
+        }
+        .navbar { 
+            width: 100%; 
+            background-color: #00509e; 
+            padding: 15px; 
+            color: #fff; 
+            text-align: center; 
+            font-size: 1.5em; 
+            font-weight: 500; 
+        }
+        .container { 
+            width: 100%; 
+            max-width: 1000px; 
+            margin-top: 30px;
+        }
+        h1 { 
+            color: #00509e; 
+            font-size: 1.8em; 
+            margin-bottom: 10px; 
+            text-align: center;
+        }
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        }
+        th, td { 
+            padding: 12px; 
+            border: 1px solid #ddd; 
+            text-align: left; 
+            font-size: 1em; 
+        }
+        th { 
+            background-color: #00509e; 
+            color: #fff; 
+            font-weight: 600; 
+        }
+        tr:nth-child(even) { 
+            background-color: #f9f9f9; 
+        }
+        tr:hover { 
+            background-color: #d1e7ff; 
+        }
+        .actions a { 
+            color: #00509e; 
+            text-decoration: none; 
+            margin: 0 5px; 
+            font-weight: 500; 
+        }
+        .add-new {
+            display: inline-block; 
+            margin-top: 20px; 
+            padding: 10px 15px; 
+            background-color: #00509e; 
+            color: #fff; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: 500; 
+            text-align: center;
+        }
+        .add-new:hover { 
+            background-color: #003f7d; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        Gerenciamento de Técnicos
+    </div>
+
+    <div class="container">
+        <h1>Visualizar Técnicos</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Telefone</th>
+                    <th>Setor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tecnico in tecnicos %}
+                <tr>
+                    <td>{{ tecnico['nome'] }}</td>
+                    <td>{{ tecnico['email'] }}</td>
+                    <td>{{ tecnico['telefone'] }}</td>
+                    <td>{{ tecnico['setor'] }}</td>
+                    <td class="actions">
+                        <a href="{{ url_for('alterar_tecnico', id=tecnico['id']) }}">Editar</a> |
+                        <a href="{{ url_for('excluir_tecnico', id=tecnico['id']) }}" style="color: #dc3545;">Excluir</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('inserir_tecnico') }}" class="add-new">Adicionar Novo Técnico</a>
+    </div>
+
+</body>
+</html>

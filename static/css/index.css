@@ -1,0 +1,223 @@
+/* Reset e estilos globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #F2E6E4;
+    color: #333;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #003f7f;
+    padding: 10px 20px;
+    color: #fff;
+    width: 100%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.navbar h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+.navbar form {
+    display: flex;
+    align-items: center;
+}
+.navbar input[type="text"] {
+    padding: 6px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 8px;
+}
+.navbar button {
+    color: #fff;
+    background: none;
+    border: 1px solid #fff;
+    font-size: 12px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.navbar button:hover {
+    background-color: #00509e;
+    border-color: #00509e;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background-color: #004a8d;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    position: fixed;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.sidebar h2 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 15px;
+}
+.user-info {
+    background-color: #00509e;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+.user-info p {
+    color: #e0e0e0;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: #ECF0F1;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    transition: background-color 0.3s;
+    font-size: 13px;
+}
+.sidebar a:hover {
+    background-color: #003366;
+}
+
+/* Centralização do Conteúdo Principal */
+.main-container {
+    margin-left: 240px;
+    padding: 80px 15px 15px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+/* Cards */
+.card, .ind {
+    background-color: #FFF8E1;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+.card h3, .ind h3 {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Section Separators */
+.separator {
+    height: 1px;
+    border-radius: 10px;
+    background-color: #B8B0A1;
+}
+
+/* Options */
+.options {
+    margin: 6% 0;
+}
+
+/* Botões */
+.btns, .bt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btns {
+    justify-content: space-around;
+    height: 80px;
+}
+.bt {
+    padding: 3%;
+    width: 18%;
+    height: 35%;
+    background-color: #D3D9C1;
+    border-radius: 0.3em;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Search Section */
+.search {
+    background-color: #E6EBE0;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+}
+.search form {
+    display: flex;
+    align-items: center;
+}
+.search input {
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid #B8B0A1;
+    border-radius: 4px;
+    flex: 1;
+    margin-right: 8px;
+}
+.search button {
+    padding: 6px 10px;
+    background-color: #91A7B4;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.search button:hover {
+    background-color: #70899B;
+}
+
+/* Rodapé */
+.footer {
+    text-align: center;
+    font-size: 12px;
+    color: #777;
+    padding: 15px;
+    background-color: #f4f6f9;
+    margin-top: auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
+    .main-container {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
