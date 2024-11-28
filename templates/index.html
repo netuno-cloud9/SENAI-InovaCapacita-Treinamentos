@@ -12,7 +12,7 @@
      <link rel="icon" href="{{ url_for('static', filename='icons/icon-192x192.png') }}">
  
       <!-- Incluindo o arquivo CSS externo -->
-     <link rel="stylesheet" href="C:\Users\instrutor\Documents\backup\edubeta\static\css\index.css"> 
+     <link rel="stylesheet" href="C:\Users\instrutor\Desktop\SENAI-InovaCapacita-Treinamentos-master\static\css>\index.css"> 
      
     <!-- Adicionamos Google Fonts e Font Awesome no head -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet">
@@ -246,6 +246,47 @@
             margin-top: auto;
         }
 
+        /* Estilo do Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Conteúdo do Modal */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            width: 80%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Botão de Fechar */
+        .modal .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .modal .close:hover,
+        .modal .close:focus {
+            color: #000;
+            text-decoration: none;
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
             .sidebar {
@@ -319,13 +360,93 @@
             <p>Incompletos</p>
             <p>{{ total_incompletos }}</p>
         </div>
-        <div class="stats-item">
+        <div class="stats-item" onclick="abrirModal('modalPercentualConclusao')">
             <img src="https://www.svgrepo.com/show/530143/certificate.svg" alt="% Conclusão">
             <p>% Conclusão</p>
             <p>{{ (total_concluidos / total_treinamentos * 100) | round(2) if total_treinamentos > 0 else 0 }}%</p>
         </div>
     </div>
 
+    <div id="modalPercentualConclusao" class="modal">
+        <div class="modal-content">
+            <!-- Botão de Fechar -->
+            <span class="close" onclick="fecharModal('modalPercentualConclusao')">&times;</span>
+            
+            <!-- Cabeçalho -->
+            <h2 style="margin-bottom: 20px;">Resumo de Conclusão</h2>
+            
+            <!-- Resumo dos Dados -->
+            <div style="text-align: left; margin-bottom: 20px;">
+                <p><strong>Total de Colaboradores:</strong> {{ total_colaboradores }}</p>
+                <p><strong>Já Concluíram:</strong> {{ total_concluidos }}</p>
+                <p><strong>Ainda em Andamento:</strong> {{ total_incompletos }}</p>
+            </div>
+    
+            <!-- Botão de Ação -->
+            <form action="{{ url_for('enviar_lembretes') }}" method="POST">
+                <button type="submit" class="btn btn-primary" 
+                    style="
+                        background-color: #007bff; 
+                        color: white; 
+                        border: none; 
+                        padding: 10px 20px; 
+                        border-radius: 5px; 
+                        cursor: pointer; 
+                        font-size: 16px;">
+                    Enviar Lembretes
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <div id="modalIncompletos" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal('modalIncompletos')">&times;</span>
+            <h2>Colaboradores com Treinamentos Incompletos</h2>
+            <ul>
+                {% for colaborador in lista_incompletos %}
+                <li>
+                    <strong>{{ colaborador.nome }}</strong>
+                    <br>Treinamentos pendentes: {{ colaborador.treinamentos_pendentes }}
+                </li>
+                {% endfor %}
+            </ul>
+            <button onclick="enviarLembretes()">Enviar Lembretes</button>
+        </div>
+    </div>
+    
+    <div id="modalTotalTreinamentos" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal('modalTotalTreinamentos')">&times;</span>
+            <h2>Detalhes dos Treinamentos</h2>
+            <ul>
+                {% for treinamento in lista_treinamentos %}
+                <li>
+                    <strong>{{ treinamento.titulo }}</strong> - {{ treinamento.data }}
+                    <br>Status: {{ treinamento.status }}
+                </li>
+                {% endfor %}
+            </ul>
+            <button onclick="window.location.href='{{ url_for('inserir_treinamento') }}'">
+                Adicionar Novo Treinamento
+            </button>
+        </div>
+    </div>
+    <div id="modalConcluidos" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="fecharModal('modalConcluidos')">&times;</span>
+            <h2>Colaboradores que Concluíram</h2>
+            <ul>
+                {% for colaborador in lista_concluidos %}
+                <li>
+                    <strong>{{ colaborador.nome }}</strong> - {{ colaborador.total_concluidos }} treinamentos
+                </li>
+                {% endfor %}
+            </ul>
+            <button onclick="exportarDados('concluidos')">Exportar Dados</button>
+        </div>
+    </div>
+    
     <!-- Filtro de Situação -->
     <div class="filter-section">
         <label for="situacaoFilter">Filtrar Situação:</label>
@@ -354,6 +475,24 @@
         &copy; {{ current_year }} Desenvolvido por Blue Team.
     </div>
 
+    <script>
+        function abrirModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+    
+        function fecharModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+    
+        window.onclick = function (event) {
+            const modais = document.querySelectorAll('.modal');
+            modais.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        };
+    </script>
     <!-- Script para registro do Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {

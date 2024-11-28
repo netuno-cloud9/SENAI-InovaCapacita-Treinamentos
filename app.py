@@ -198,18 +198,26 @@ def index():
     if is_logged_in():
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
         
-        # Consulta para contar treinamentos completos, incompletos e total
+        # Consulta para contar o total de treinamentos cadastrados
+        cursor.execute("SELECT COUNT(*) AS total_treinamentos FROM treinamentos")
+        total_treinamentos = cursor.fetchone()['total_treinamentos']
+        
+        # Consulta para contar o total de colaboradores
+        cursor.execute("SELECT COUNT(*) AS total_colaboradores FROM colaboradores")
+        total_colaboradores = cursor.fetchone()['total_colaboradores']
+        
+        # Consulta para treinamentos completos e incompletos
         cursor.execute("""
             SELECT 
-                COUNT(*) AS total_treinamentos,
                 SUM(CASE WHEN st.situacao = 'em_dias' THEN 1 ELSE 0 END) AS total_concluidos,
                 SUM(CASE WHEN st.situacao = 'vencido' THEN 1 ELSE 0 END) AS total_incompletos
             FROM situacao_treinamento st
         """)
+        situacoes = cursor.fetchone()
+        total_concluidos = situacoes['total_concluidos'] or 0
+        total_incompletos = situacoes['total_incompletos'] or 0
         
-        estatisticas = cursor.fetchone()
-        
-        # Consulta para obter dados de treinamento por mês (usado nos gráficos)
+        # Consulta para obter dados de treinamento por mês (gráficos)
         cursor.execute("""
             SELECT 
                 MONTH(t.data) AS mes, 
@@ -220,17 +228,12 @@ def index():
             GROUP BY MONTH(t.data)
             ORDER BY MONTH(t.data)
         """)
-        
         dados_situacao = cursor.fetchall()
 
-        situacao_labels = []
-        completos_data = []
-        incompletos_data = []
-
-        for row in dados_situacao:
-            situacao_labels.append(f'Mês {row["mes"]}')
-            completos_data.append(row['completos'] or 0)
-            incompletos_data.append(row['incompletos'] or 0)
+        # Preparar os dados para os gráficos
+        situacao_labels = [f"Mês {row['mes']}" for row in dados_situacao]
+        completos_data = [row['completos'] or 0 for row in dados_situacao]
+        incompletos_data = [row['incompletos'] or 0 for row in dados_situacao]
         
         # Consulta para calcular o percentual de conformidade por colaborador
         cursor.execute("""
@@ -241,18 +244,15 @@ def index():
             JOIN situacao_treinamento st ON c.id = st.colaborador_id
             GROUP BY c.nome
         """)
-        
         dados_conformidade = cursor.fetchall()
 
-        nomes_colaboradores = []
-        percentuais_conformidade = []
-
-        for row in dados_conformidade:
-            nomes_colaboradores.append(row['nome'])
-            percentuais_conformidade.append(row['percentual_conformidade'] or 0)
+        # Preparar os dados de conformidade
+        nomes_colaboradores = [row['nome'] for row in dados_conformidade]
+        percentuais_conformidade = [row['percentual_conformidade'] or 0 for row in dados_conformidade]
 
         cursor.close()
         
+        # Renderizar o template com os dados coletados
         return render_template(
             'index.html',
             username=session.get('username'),
@@ -262,13 +262,16 @@ def index():
             incompletos_data=incompletos_data,
             nomes_colaboradores=nomes_colaboradores,
             percentuais_conformidade=percentuais_conformidade,
-            total_treinamentos=estatisticas['total_treinamentos'],
-            total_concluidos=estatisticas['total_concluidos'],
-            total_incompletos=estatisticas['total_incompletos'],
+            total_treinamentos=total_treinamentos,
+            total_colaboradores=total_colaboradores,
+            total_concluidos=total_concluidos,
+            total_incompletos=total_incompletos,
             current_year=2024
         )
 
+    # Redirecionar para login se não estiver autenticado
     return redirect(url_for('login'))
+
 
 
 # Rota de logout
@@ -450,6 +453,29 @@ def test_couchdb():
         message=message,
         databases=databases
     )
+
+@app.route('/enviar_lembretes', methods=['POST'])
+def enviar_lembretes():
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    
+    # Consulta para obter colaboradores que não concluíram
+    cursor.execute("""
+        SELECT c.nome, c.email
+        FROM colaboradores c
+        JOIN situacao_treinamento st ON c.id = st.colaborador_id
+        WHERE st.situacao = 'vencido'
+    """)
+    nao_concluidos = cursor.fetchall()
+    cursor.close()
+    
+    # Aqui você adicionaria a lógica para enviar e-mails
+    for colaborador in nao_concluidos:
+        # Simulação de envio de e-mail (substitua com sua lógica)
+        print(f"Enviando lembrete para: {colaborador['nome']} - {colaborador['email']}")
+
+    flash("Lembretes enviados com sucesso!", "success")
+    return redirect(url_for('index'))
+
 
 # Executa o app
 if __name__ == '__main__':
